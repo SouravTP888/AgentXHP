@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgentX | ToMatrix Autonomous Core</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        darkBg: '#05070F', /* Premium deep dark space vacuum */
+                        cyberIndigo: '#6366F1', /* Electric Indigo CTA */
+                        cyberCyan: '#06B6D4', /* Structural Cyan accent */
+                        panelGray: '#0D1122', /* Asymmetric container backing */
+                    },
+                    letterSpacing: {
+                        widest: '.25em',
+                        ultra: '.35em',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 10s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'grid-move': 'gridMove 30s linear infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        gridMove: {
+                            '0%': { transform: 'translateY(0)' },
+                            '100%': { transform: 'translateY(50px)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #05070F;
+            color: #ffffff;
+        }
+        /* Minimal structural separating lines styled in cyber low-opacity */
+        .editorial-divider {
+            border-bottom: 1px solid rgba(99, 102, 241, 0.08);
+        }
+        /* Animated Matrix Grid Backing canvas wrapper */
+        .cyber-matrix-grid {
+            background-image: linear-gradient(to right, rgba(99, 102, 241, 0.02) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(99, 102, 241, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        /* 3D Interactive Perspective Grid Components */
+        .perspective-viewport {
+            perspective: 1400px;
+        }
+        .interactive-3d-card {
+            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s, box-shadow 0.4s;
+            transform-style: preserve-3d;
+        }
+        .interactive-3d-card:hover {
+            transform: rotateX(5deg) rotateY(-5deg) translateZ(12px);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7), 0 0 50px rgba(99, 102, 241, 0.08);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased overflow-x-hidden selection:bg-cyberIndigo selection:text-white">
+
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="absolute inset-0 cyber-matrix-grid animate-grid-move"></div>
+        <div class="absolute top-[-15%] left-[-5%] w-[800px] h-[800px] bg-cyberIndigo/5 rounded-full blur-[180px] animate-pulse-slow"></div>
+        <div class="absolute bottom-[15%] right-[-5%] w-[700px] h-[700px] bg-cyberCyan/5 rounded-full blur-[150px] animate-pulse-slow" style="animation-delay: 5s;"></div>
+    </div>
+
+    <header class="fixed top-0 left-0 right-0 z-50 bg-darkBg/50 backdrop-blur-xl editorial-divider">
+        <div class="max-w-screen-2xl mx-auto px-6 md:px-12 h-24 flex items-center justify-between">
+            
+            <div class="flex items-center gap-3 group cursor-pointer">
+                <div class="relative w-10 h-10 flex items-center justify-center">
+                    <div class="absolute inset-0 border border-cyberIndigo/40 rounded-lg transform rotate-45 group-hover:rotate-90 transition-transform duration-700 ease-out"></div>
+                    <div class="absolute inset-1.5 border border-cyberCyan/30 rounded-md transform -rotate-45 group-hover:rotate-45 transition-transform duration-700 ease-out"></div>
+                    <div class="z-10 font-display font-bold text-xs tracking-tighter text-white">AX</div>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-display text-xl font-bold tracking-widest text-white uppercase">
+                        Agent<span class="text-transparent bg-clip-text bg-gradient-to-r from-cyberIndigo to-cyberCyan font-extrabold">X</span>
+                    </span>
+                    <span class="text-[7px] tracking-ultra text-gray-500 uppercase -mt-1">By ToMatrix</span>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex items-center gap-14 text-[10px] font-medium tracking-ultra uppercase text-gray-400">
+                <a href="#architecture" class="hover:text-white transition-colors duration-300">Architecture</a>
+                <a href="#editions" class="hover:text-white transition-colors duration-300">Deployment tiers</a>
+                <a href="#integrators" class="hover:text-white transition-colors duration-300">Integrators</a>
+            </nav>
+
+            <div>
+                <a href="#editions" class="text-[10px] tracking-ultra uppercase font-medium text-white border-b border-cyberCyan/40 hover:border-cyberIndigo hover:text-cyberIndigo transition-all duration-300 pb-1">
+                    Initialize Node
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative min-h-screen flex flex-col justify-center items-center pt-24 z-10">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            
+            <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-bold tracking-ultra bg-cyberIndigo/10 text-cyberIndigo border border-cyberIndigo/20 mb-8 uppercase animate-float">
+                <i data-lucide="shield-check" class="w-3 h-3 text-cyberCyan"></i> Flagship Engine Instance
+            </span>
+            
+            <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl font-light tracking-widest text-white uppercase leading-[1.12] mb-8">
+                Autonomous Systems.<br>
+                <span class="font-bold bg-gradient-to-r from-white via-gray-300 to-gray-500 bg-clip-text text-transparent">Deterministic Power.</span>
+            </h1>
+            
+            <p class="text-sm md:text-base text-gray-400 max-w-3xl mx-auto mb-16 leading-relaxed font-light tracking-wide">
+                AgentX orchestrates asynchronous background tasks, maps complex relational pipelines, and mitigates API bottlenecks across multi-platform networks natively—engineered with the uncompromising precision of elite software systems.
+            </p>
+            
+            <div class="perspective-viewport">
+                <a href="#editions" class="inline-block px-12 py-4 border border-cyberIndigo text-[11px] tracking-ultra uppercase text-white hover:bg-gradient-to-r hover:from-cyberIndigo hover:to-cyberCyan hover:border-transparent transition-all duration-500 rounded-sm shadow-lg shadow-cyberIndigo/10">
+                    START FREE TRIAL
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="architecture" class="py-32 bg-darkBg relative z-10 border-t border-white/[0.02]">
+        <div class="max-w-screen-xl mx-auto px-6 md:px-12">
+            
+            <div class="text-center mb-36">
+                <span class="text-[10px] font-bold tracking-ultra text-cyberCyan uppercase block mb-3">System Specifications</span>
+                <h2 class="font-display text-2xl md:text-3xl font-light tracking-ultra uppercase mb-4">Core Architecture</h2>
+                <div class="w-16 h-[1px] bg-gradient-to-r from-cyberIndigo to-cyberCyan mx-auto"></div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center gap-16 md:gap-24 mb-32 perspective-viewport">
+                <div class="interactive-3d-card w-full md:w-1/2 aspect-[4/3] bg-panelGray border border-cyberIndigo/10 rounded-xl relative overflow-hidden group p-8 flex items-center justify-center">
+                    <div class="absolute inset-0 bg-gradient-to-br from-cyberIndigo/5 to-transparent pointer-events-none"></div>
+                    <div class="w-48 h-48 rounded-full bg-cyberIndigo/5 blur-3xl group-hover:bg-cyberIndigo/10 transition-colors duration-500"></div>
+                    <i data-lucide="cpu" class="w-24 h-24 stroke-[0.5] text-cyberIndigo/30 group-hover:text-cyberIndigo group-hover:scale-110 transition-all duration-700"></i>
+                </div>
+                <div class="w-full md:w-1/2 space-y-6">
+                    <span class="text-[10px] font-bold tracking-widest text-cyberCyan uppercase">Module 01 / Flow Routing</span>
+                    <h3 class="font-display text-2xl md:text-3xl font-light tracking-wider uppercase text-white">Perpetual Neural Network Routing</h3>
+                    <p class="text-gray-400 font-light leading-relaxed text-sm tracking-wide">
+                        Constructed to process unstructured multi-tenant operational instructions natively without instruction latency. AgentX continually maps graph variables and realigns execution layers safely as changing data parameters require.
+                    </p>
+                    <ul class="text-xs space-y-2 text-gray-500 font-light">
+                        <li class="flex items-center gap-2"><i data-lucide="arrow-right" class="w-3 h-3 text-cyberIndigo"></i> Dynamic context path optimization</li>
+                        <li class="flex items-center gap-2"><i data-lucide="arrow-right" class="w-3 h-3 text-cyberIndigo"></i> Graph-relational instruction parsing</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flex flex-col-reverse md:flex-row items-center gap-16 md:gap-24 mb-32 perspective-viewport">
+                <div class="w-full md:w-1/2 space-y-6 md:text-right">
+                    <span class="text-[10px] font-bold tracking-widest text-cyberIndigo uppercase">Module 02 / Fault Tolerance</span>
+                    <h3 class="font-display text-2xl md:text-3xl font-light tracking-wider uppercase text-white">Self-Healing Telemetry Arrays</h3>
+                    <p class="text-gray-400 font-light leading-relaxed text-sm tracking-wide md:ml-auto">
+                        When system-level endpoints or foreign API frameworks fracture, the embedded kernel flags anomalies and intercepts states silently. It instantly deploys backup fallback protocols inside sandboxed layers, completely removing integration downtime.
+                    </p>
+                    <ul class="text-xs space-y-2 text-gray-500 font-light flex flex-col md:items-end">
+                        <li class="flex items-center gap-2"><i data-lucide="arrow-right" class="w-3 h-3 text-cyberCyan"></i> Real-time anomaly interception loops</li>
+                        <li class="flex items-center gap-2"><i data-lucide="arrow-right" class="w-3 h-3 text-cyberCyan"></i> Automated container network fallback</li>
+                    </ul>
+                </div>
+                <div class="interactive-3d-card w-full md:w-1/2 aspect-[4/3] bg-panelGray border border-cyberIndigo/10 rounded-xl relative overflow-hidden group p-8 flex items-center justify-center">
+                    <div class="absolute inset-0 bg-gradient-to-bl from-cyberCyan/5 to-transparent pointer-events-none"></div>
+                    <div class="w-48 h-48 rounded-full bg-cyberCyan/5 blur-3xl group-hover:bg-cyberCyan/10 transition-colors duration-500"></div>
+                    <i data-lucide="activity" class="w-24 h-24 stroke-[0.5] text-cyberCyan/30 group-hover:text-cyberCyan group-hover:scale-110 transition-all duration-700"></i>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center gap-16 md:gap-24 mb-12 perspective-viewport">
+                <div class="interactive-3d-card w-full md:w-1/2 aspect-[4/3] bg-panelGray border border-cyberIndigo/10 rounded-xl relative overflow-hidden group p-8 flex items-center justify-center">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-purple-500/5 to-transparent pointer-events-none"></div>
+                    <div class="w-48 h-48 rounded-full bg-purple-500/5 blur-3xl group-hover:bg-purple-500/10 transition-colors duration-500"></div>
+                    <i data-lucide="shield" class="w-24 h-24 stroke-[0.5] text-purple-400/30 group-hover:text-purple-400 group-hover:scale-110 transition-all duration-700"></i>
+                </div>
+                <div class="w-full md:w-1/2 space-y-6">
+                    <span class="text-[10px] font-bold tracking-widest text-purple-400 uppercase">Module 03 / Data Security</span>
+                    <h3 class="font-display text-2xl md:text-3xl font-light tracking-wider uppercase text-white">Zero-Knowledge Token Isolation</h3>
+                    <p class="text-gray-400 font-light leading-relaxed text-sm tracking-wide">
+                        Enterprise privacy is preserved structurally at the fundamental runtime level. Agent variables remain fully isolated using hardware-level cryptographic sandboxing vectors, matching rigorous global compliance guidelines cleanly.
+                    </p>
+                    <ul class="text-xs space-y-2 text-gray-500 font-light">
+                        <li class="flex items-center gap-2"><i data-lucide="arrow-right" class="w-3 h-3 text-purple-400"></i> Secure multi-tenant context boundary pools</li>
+                        <li class="flex items-center gap-2"><i data-lucide="arrow-right" class="w-3 h-3 text-purple-400"></i> End-to-end telemetry signal encryption</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="editions" class="py-32 bg-panelGray/30 relative z-10 border-t border-white/[0.02]">
+        <div class="max-w-screen-xl mx-auto px-6 md:px-12">
+            
+            <div class="text-center mb-28">
+                <span class="text-[10px] font-bold tracking-ultra text-cyberIndigo uppercase block mb-3">Infrastructure Provisioning</span>
+                <h2 class="font-display text-2xl md:text-3xl font-light tracking-ultra uppercase mb-4">Deployment Editions</h2>
+                <div class="w-16 h-[1px] bg-gradient-to-r from-cyberIndigo to-cyberCyan mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto perspective-viewport">
+                
+                <div class="interactive-3d-card border border-white/5 bg-darkBg/90 p-12 flex flex-col justify-between rounded-xl">
+                    <div>
+                        <span class="text-[10px] font-bold tracking-ultra text-gray-400 uppercase">Developer Instance</span>
+                        <div class="flex items-baseline gap-1 mt-6 mb-8">
+                            <span class="font-display text-5xl font-light text-white">$29</span>
+                            <span class="text-xs text-gray-500 tracking-widest uppercase">/ Node / Month</span>
+                        </div>
+                        <p class="text-xs text-gray-400 font-light tracking-wide mb-8">Engineered for isolated environment building and system diagnostics testing loops.</p>
+                        <div class="space-y-4 text-sm font-light text-gray-400 tracking-wide">
+                            <p class="editorial-divider pb-4 flex justify-between"><span>Active Node Clusters</span> <span class="text-white font-medium">03 Pools</span></p>
+                            <p class="editorial-divider pb-4 flex justify-between"><span>Synchronous Step Metric</span> <span class="text-white font-medium">10,000 / mo</span></p>
+                            <p class="editorial-divider pb-4 flex justify-between"><span>Port Access Matrix</span> <span class="text-white font-medium">Standard TLS</span></p>
+                            <p class="pb-4 flex justify-between"><span>Logs Retention Sync</span> <span class="text-white font-medium">7-Day Local</span></p>
+                        </div>
+                    </div>
+                    <button class="mt-12 w-full py-4 border border-white/10 text-[10px] tracking-ultra uppercase text-gray-300 hover:text-white hover:border-cyberCyan transition-all duration-300 rounded-lg bg-white/[0.01]">
+                        Provision Sandbox
+                    </button>
+                </div>
+
+                <div class="interactive-3d-card border-2 border-cyberIndigo bg-darkBg p-12 flex flex-col justify-between relative rounded-xl shadow-xl shadow-cyberIndigo/5">
+                    <span class="absolute -top-3.5 right-8 bg-gradient-to-r from-cyberIndigo to-cyberCyan text-white text-[9px] tracking-ultra uppercase px-4 py-1 font-bold rounded-full shadow-md">
+                        Production Kernel
+                    </span>
+                    <div>
+                        <span class="text-[10px] font-bold tracking-ultra text-cyberIndigo uppercase">Scale Infrastructure</span>
+                        <div class="flex items-baseline gap-1 mt-6 mb-8">
+                            <span class="font-display text-5xl font-light text-white">$79</span>
+                            <span class="text-xs text-gray-500 tracking-widest uppercase">/ Node / Month</span>
+                        </div>
+                        <p class="text-xs text-gray-400 font-light tracking-wide mb-8">Engineered to support live multi-tenant production operations running mission-critical tasks.</p>
+                        <div class="space-y-4 text-sm font-light text-gray-300 tracking-wide">
+                            <p class="editorial-divider border-cyberIndigo/20 pb-4 flex justify-between"><span>Active Node Clusters</span> <span class="text-white font-medium">Infinite Pools</span></p>
+                            <p class="editorial-divider border-cyberIndigo/20 pb-4 flex justify-between"><span>Synchronous Step Metric</span> <span class="text-white font-medium">Unlimited</span></p>
+                            <p class="editorial-divider border-cyberIndigo/20 pb-4 flex justify-between"><span>State Execution Loops</span> <span class="text-cyberCyan font-medium">Sub-ms Dedicated</span></p>
+                            <p class="editorial-divider border-cyberIndigo/20 pb-4 flex justify-between"><span>Model Parameter Tuning</span> <span class="text-white font-medium">Full Access</span></p>
+                            <p class="pb-4 flex justify-between"><span>Redundant SLA Channels</span> <span class="text-white font-medium">24/7 Priority Support</span></p>
+                        </div>
+                    </div>
+                    <button class="mt-12 w-full py-4 bg-gradient-to-r from-cyberIndigo to-indigo-700 text-white text-[10px] font-bold tracking-ultra uppercase hover:opacity-90 transition-all duration-300 rounded-lg shadow-lg shadow-cyberIndigo/20">
+                        Deploy Cluster Core
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="integrators" class="py-36 bg-darkBg relative z-10 border-t border-white/[0.02]">
+        <div class="max-w-screen-md mx-auto px-6 text-center">
+            
+            <div class="text-center mb-24">
+                <span class="text-[10px] font-bold tracking-ultra text-gray-500 uppercase block mb-3">Validation Testing</span>
+                <h2 class="font-display text-2xl md:text-3xl font-light tracking-ultra uppercase mb-4">Ecosystem Integrators</h2>
+                <div class="w-16 h-[1px] bg-gradient-to-r from-cyberIndigo to-cyberCyan mx-auto"></div>
+            </div>
+            
+            <div class="space-y-28">
+                <div class="group">
+                    <p class="font-display text-xl md:text-2xl font-light leading-relaxed text-gray-200 mb-8 tracking-wide">
+                        "The deterministic execution loop is flawless. AgentX handles our background system state changes with structural integrity, preventing data schema breaks entirely."
+                    </p>
+                    <span class="block text-xs tracking-widest uppercase text-cyberIndigo font-medium mb-1">Marcus K.</span>
+                    <span class="block text-[9px] tracking-ultra uppercase text-gray-500">Lead Infrastructure Architect</span>
+                </div>
+
+                <div class="group">
+                    <p class="font-display text-xl md:text-2xl font-light leading-relaxed text-gray-200 mb-8 tracking-wide">
+                        "Deploying the network isolation tokens let our backend engineer units drop active error patching processes from the main timeline completely."
+                    </p>
+                    <span class="block text-xs tracking-widest uppercase text-cyberCyan font-medium mb-1">Sarah L.</span>
+                    <span class="block text-[9px] tracking-ultra uppercase text-gray-500">Director of Systems Operations</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-darkBg pt-32 pb-12 relative z-10 border-t border-white/[0.04]">
+        <div class="max-w-screen-xl mx-auto px-6 md:px-12">
+            
+            <div class="relative rounded-2xl border border-cyberIndigo/10 bg-gradient-to-br from-panelGray to-transparent p-8 md:p-16 text-center overflow-hidden mb-24 group shadow-xl">
+                <div class="absolute -top-24 -right-24 w-80 h-80 bg-cyberIndigo/5 rounded-full blur-3xl pointer-events-none group-hover:bg-cyberIndigo/10 transition-colors duration-700"></div>
+                <div class="relative z-10 max-w-xl mx-auto">
+                    <h3 class="font-display text-2xl md:text-3xl font-light text-white uppercase tracking-wider mb-4">Initialize System Protocol</h3>
+                    <p class="text-xs sm:text-sm text-gray-400 mb-10 font-light tracking-wide leading-relaxed">Connect cleanly to the ToMatrix automation layer and deploy zero-latency agent configurations instantly.</p>
+                    <a href="#editions" class="inline-flex items-center gap-3 px-10 py-4 font-bold text-white bg-gradient-to-r from-cyberIndigo to-cyberCyan text-[10px] tracking-ultra uppercase rounded-lg hover:opacity-90 transition-all shadow-lg shadow-cyberIndigo/20">
+                        Acquire Token Key <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="w-full h-[1px] bg-white/5 mb-12"></div>
+
+            <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+                
+                <div class="flex items-center gap-3">
+                    <div class="w-6 h-6 relative flex items-center justify-center">
+                        <div class="absolute inset-0 border border-cyberIndigo/30 rounded transform rotate-45"></div>
+                        <span class="text-[8px] font-bold text-white z-10">X</span>
+                    </div>
+                    <span class="text-[10px] tracking-widest text-gray-500 uppercase">&copy; 2026 ToMatrix Systems Inc. All Rights Reserved.</span>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-10 text-[10px] tracking-ultra uppercase font-medium text-gray-400">
+                    <a href="#architecture" class="hover:text-white transition-colors">Architecture</a>
+                    <a href="#editions" class="hover:text-white transition-colors">Editions</a>
+                    <a href="#integrators" class="hover:text-white transition-colors">Integrators</a>
+                    <span class="text-white/5 hidden sm:inline">|</span>
+                    <div class="flex items-center gap-4 text-gray-500">
+                        <a href="#" class="hover:text-white"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+                        <a href="#" class="hover:text-white"><i data-lucide="github" class="w-4 h-4"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
